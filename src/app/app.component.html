@@ -5,8 +5,15 @@
 
   <app-auth />
   @if(isAdmin()) {
-    <p>Only admins should see this! - newer Angular versions</p>
+    <p class="protected-content admin">Only admins should see this! - newer Angular versions</p>
   }
 
-  <p *ngIf="isAdmin()">Only admins should see this! - structural directive</p>
+  <p *ngIf="isAdmin()" class="protected-content admin">Only admins should see this! - structural directive</p>
+  <ng-template appAuth="admin" > <!-- Ng template is initially not rendered -->
+    <p class="protected-content admin">Only admins should see this! - custom directive</p>
+  </ng-template>
+
+  <p *appAuth="'admin'" class="protected-content admin">Only admins should see this! - custom directive with asterix</p> <!-- asterix generates template element automatically -->
+  <p *appAuth="'user'" class="protected-content authenticated">Only regular users should see this! - custom directive with asterix</p> <!-- asterix generates template element automatically -->
+  <p *appAuth="'guest'" class="protected-content unauthenticated">Only guests should see this! - custom directive with asterix</p> <!-- asterix generates template element automatically -->
 </main>
